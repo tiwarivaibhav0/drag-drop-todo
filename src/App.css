@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  background-color: aliceblue;
+}
+.container {
+  max-width: 1140px;
+ 
+  margin: auto;
+  text-align: center;
+}
+
+.section-main {
+  min-height: 65vh;
+  display: flex;
+  justify-content: space-around;
+}
+
+.section-main > div{
+  border: 2px solid rgb(27, 1, 1);
+  flex: 0 0 100%;
+  max-width: 30%;
+  background-color: rgb(159, 202, 239);
+}
+.dropzone {
+  margin-top: 2%;
+  min-height: 60vh;
+  min-width: 100%;
+}
+
+.section-main-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.draggable-card{
+  margin-top: 2%;
+  cursor: pointer;
+}
+
