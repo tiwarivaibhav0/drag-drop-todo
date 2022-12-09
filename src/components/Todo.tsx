@@ -10,8 +10,7 @@ const Todo: React.FC = () => {
   const [showCompleted, setShowCompleted] = useState(false);
   const [list, setList] = useState([]);
   const [inputFields, setInputFields] = useState(["", "", ""]);
-  const [edit, setEdit] = useState(false);
-
+  const [edit, setEdit] = useState([false, false, false]);
 
   function allowDrop(ev: any) {
     ev.preventDefault();
@@ -28,30 +27,33 @@ const Todo: React.FC = () => {
     setList(tempList);
     setTransferIndex(null);
   }
-  
+
   const handleInput = (val: string, index: any) => {
     let tempInputs = [...inputFields];
     tempInputs[index] = val;
     setInputFields(tempInputs);
   };
-  
+
   const addNewTask = (val: string, cat: string, index: any) => {
+    if (val !== "") {
+      let newTask = {
+        data: val,
+        cat: cat,
+      };
 
-    let newTask = {
-      data: val,
-      cat: cat,
-    };
+      let tempList: any = [...list];
+      tempList.push(newTask);
+      setList(tempList);
 
-    let tempList: any = [...list];
-    tempList.push(newTask);
-    setList(tempList);
+      let tempInputs = [...inputFields];
+      tempInputs[index] = "";
+      setInputFields(tempInputs);
 
-    let tempInputs = [...inputFields];
-    tempInputs[index] = "";
-    setInputFields(tempInputs);
-    setEdit(false)
+      let tempEdits = [...edit];
+      tempEdits[index] = false;
+      setEdit(tempEdits);
+    }
   };
-
 
   const deleteTask = (index: any) => {
     let tempList: any = [...list];
@@ -59,14 +61,15 @@ const Todo: React.FC = () => {
     setList(tempList);
   };
 
-  
-
   const editTask = (index: any, inputIndex: any) => {
     let tempInputs = [...inputFields];
     tempInputs[inputIndex] = list[index]["data"];
     setInputFields(tempInputs);
     deleteTask(index);
-    setEdit(true)
+
+    let tempEdits = [...edit];
+    tempEdits[inputIndex] = true;
+    setEdit(tempEdits);
   };
   return (
     <>
@@ -119,7 +122,7 @@ const Todo: React.FC = () => {
                               editTask(i, "0");
                               setShowReview(true);
                             }}
-                            disabled={edit}
+                            disabled={edit[0]}
                           >
                             <EditOutlined />
                           </Button>
@@ -178,7 +181,7 @@ const Todo: React.FC = () => {
                               editTask(i, "1");
                               setShowPending(true);
                             }}
-                            disabled={edit}
+                            disabled={edit[1]}
                           >
                             <EditOutlined />
                           </Button>
@@ -239,7 +242,7 @@ const Todo: React.FC = () => {
                               editTask(i, "2");
                               setShowCompleted(true);
                             }}
-                            disabled={edit}
+                            disabled={edit[2]}
                           >
                             <EditOutlined />
                           </Button>
